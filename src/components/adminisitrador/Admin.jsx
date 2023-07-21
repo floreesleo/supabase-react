@@ -1,3 +1,10 @@
+import NavBar from "./../NavBar";
+
 export default function Admin() {
-  return <div>Admin</div>;
+  return (
+    <>
+      <NavBar />
+      <div>Admin</div>
+    </>
+  );
 }

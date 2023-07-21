@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./../../supabase/client";
+import NavBar from "./../NavBar";
 
 export default function Perfil() {
   const navigate = useNavigate();
@@ -15,11 +16,14 @@ export default function Perfil() {
   };
 
   return (
-    <div>
-      Perfil
-      <Button variant="link" onClick={handleLogOut}>
-        Cerrar sesión
-      </Button>
-    </div>
+    <>
+      <NavBar />
+      <div>
+        Perfil
+        <Button variant="link" onClick={handleLogOut}>
+          Cerrar sesión
+        </Button>
+      </div>
+    </>
   );
 }

@@ -1,3 +1,10 @@
+import NavBar from "./../NavBar";
+
 export default function Contactos() {
-  return <div>Conctactos</div>;
+  return (
+    <>
+      <NavBar />
+      <div>Conctactos</div>
+    </>
+  );
 }
