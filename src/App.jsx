@@ -6,6 +6,8 @@ import NotFound from "./components/NotFound";
 
 import { supabase } from "./supabase/client";
 
+import { TaskContextProvider } from "./context/TaskContext";
+
 function App() {
   const navigate = useNavigate();
 
@@ -28,11 +30,13 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <TaskContextProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TaskContextProvider>
     </>
   );
 }
