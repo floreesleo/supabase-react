@@ -21,7 +21,9 @@ export default function TasksForm() {
           onChange={(ev) => setTaskName(ev.target.value)}
           value={taskName}
         />
-        <button disabled={adding}>{adding ? "Añadiendo..." : "Añadir"}</button>
+        <button type="submit" disabled={adding}>
+          {adding ? "Añadiendo..." : "Añadir"}
+        </button>
       </form>
     </>
   );

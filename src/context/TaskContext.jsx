@@ -15,6 +15,7 @@ export const useTask = () => {
 // eslint-disable-next-line react/prop-types
 export const TaskContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]);
   const [adding, setAdding] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -89,6 +90,63 @@ export const TaskContextProvider = ({ children }) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
+  //| USUARIOS
+  const getUsers = async () => {
+    setLoading(true);
+
+    const { error, data } = await supabase
+      .from("administrador")
+      .select()
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+
+    setUsers(data);
+
+    setLoading(false);
+  };
+
+  const createUser = async (nombre, usuario) => {
+    setAdding(true);
+    try {
+      const { error, data } = await supabase
+        .from("administrador")
+        .insert({ name: nombre, user: usuario });
+
+      if (error) throw error;
+
+      setUsers([...users, ...data]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const deleteUser = async (id) => {
+    // eslint-disable-next-line no-unused-vars
+    const { error, data } = await supabase
+      .from("administrador")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
+  const updateUser = async (id, updateFields) => {
+    // eslint-disable-next-line no-unused-vars
+    const { error, data } = await supabase
+      .from("administrador")
+      .update(updateFields)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -99,6 +157,11 @@ export const TaskContextProvider = ({ children }) => {
         loading,
         deleteTask,
         updateTask,
+        users,
+        getUsers,
+        createUser,
+        deleteUser,
+        updateUser,
       }}
     >
       {children}

@@ -1,10 +1,10 @@
 import NavBar from "./../NavBar";
 
-export default function Admin() {
+export default function ArchivosHome() {
   return (
     <>
       <NavBar />
-      <div>Admin</div>
+      <h2>Archivos</h2>
     </>
   );
 }
