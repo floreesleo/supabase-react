@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "./../supabase/client";
 import TasksForm from "./tasks/TasksForm";
 import TaskList from "./tasks/TaskList";
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
+import NavBar from "./NavBar";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,21 +16,9 @@ export default function Home() {
     }
   }, [navigate]);
 
-  const handleLogOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      navigate("/login");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
-      <h2>Home</h2>
-      <Button variant="link" onClick={handleLogOut}>
-        Cerrar sesión
-      </Button>
+      <NavBar />
 
       <TasksForm />
       <header>
