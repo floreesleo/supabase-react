@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Login from "./components/Login";
+//! import Login from "./components/Login";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import UserHome from "./components/adminisitrador/UserHome";
@@ -8,6 +8,9 @@ import Contactos from "./components/contactos/Contactos";
 import Perfil from "./components/perfil/Perfil";
 import TaskHome from "./components/tasks/TaskHome";
 import ArchivosHome from "./components/archivos/ArchivosHome";
+import Signup from "./components/autenticacion/Signup";
+import Login from "./components/autenticacion/Login";
+import ForgotPassword from "./components/autenticacion/ForgotPassword";
 
 import { supabase } from "./supabase/client";
 
@@ -19,7 +22,7 @@ function App() {
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log("supabase event: ", event);
+        console.log("EVENTO DE SUPABASE ", event);
         if (session == null) {
           navigate("/login", { replace: true });
         } else {
@@ -46,6 +49,8 @@ function App() {
           <Route path="/tasks" element={<TaskHome />} />
           <Route path="/tasks" element={<TaskHome />} />
           <Route path="/files" element={<ArchivosHome />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </TaskContextProvider>
     </>
