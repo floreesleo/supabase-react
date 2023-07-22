@@ -47,7 +47,9 @@ export default function Login() {
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>
+                    Ingresa tu Email para obtener el Link máico
+                  </Form.Label>
                   <Form.Control
                     type="email"
                     required
@@ -57,8 +59,12 @@ export default function Login() {
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Button className="w-100 mt-2" type="submit">
-                    Enviar
+                  <Button
+                    className="w-100 mt-2"
+                    type="submit"
+                    variant="primary"
+                  >
+                    Obtener link mágico
                   </Button>
                 </Form.Group>
               </Form>
