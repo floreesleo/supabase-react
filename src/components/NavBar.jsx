@@ -23,6 +23,9 @@ export default function NavBar() {
               <NavDropdown.Item as={Link} to="/tareas">
                 Tareas
               </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/contactos">
+                Contactos
+              </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/perfil">
                 Perfil
               </NavDropdown.Item>
