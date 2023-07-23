@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  Container,
-  Form,
-  Card,
-  Alert,
-  Button,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Container, Form, Card, Alert, Button, Row, Col } from "react-bootstrap";
 
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
@@ -108,43 +100,43 @@ export default function Home() {
   }
   return (
     <>
-      <Container align="center" className="container-sm mt-4">
-        {user === null ? (
-          <>
-            <Card>
-              <Card.Body>
-                <h2 className="text-center mb-4">Inicio de sesión</h2>
-                {message && <Alert variant="success">{message}</Alert>}
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group id="email">
-                    <Form.Label>
-                      Ingresa tu Email para obtener el Link máico
-                    </Form.Label>
-                    <Form.Control
-                      type="email"
-                      required
-                      name="email"
-                      placeholder="example@example.com"
-                      onChange={(ev) => setEmail(ev.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Button
-                      className="w-100 mt-2"
-                      type="submit"
-                      variant="primary"
-                    >
-                      Confirmar email
-                    </Button>
-                  </Form.Group>
-                </Form>
-              </Card.Body>
-            </Card>
-          </>
-        ) : (
-          <>
-            <NavBar />
+      {user === null ? (
+        <>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Inicio de sesión</h2>
+              {message && <Alert variant="success">{message}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Form onSubmit={handleSubmit}>
+                <Form.Group id="email">
+                  <Form.Label>
+                    Ingresa tu Email para obtener el Link máico
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    required
+                    name="email"
+                    placeholder="example@example.com"
+                    onChange={(ev) => setEmail(ev.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Button
+                    className="w-100 mt-2"
+                    type="submit"
+                    variant="primary"
+                  >
+                    Confirmar email
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+        </>
+      ) : (
+        <>
+          <NavBar />
+          <Container align="center" className="container-sm mt-4">
             <p>
               <strong>Email:</strong> {user.email}
             </p>
@@ -178,9 +170,9 @@ export default function Home() {
                 );
               })}
             </Row>
-          </>
-        )}
-      </Container>
+          </Container>
+        </>
+      )}
     </>
   );
 }
