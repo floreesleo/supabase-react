@@ -24,13 +24,13 @@ export default function Home() {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
 
-  const [images, setImages] = useState();
-
   //| LOGIN
   const [email, setEmail] = useState("");
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -97,7 +97,7 @@ export default function Home() {
 
   async function deleteImage(imageName) {
     const { error } = await supabaseClient.storage
-      .from("images")
+      .from("files")
       .remove([user.id + "/" + imageName]);
 
     if (error) {
