@@ -7,7 +7,7 @@ import TareasCard from "./TareasCard";
 export default function Tareas() {
   const [nameRef, setName] = useState("");
   const [descriptionRef, setDescription] = useState("");
-  //! const [importantRef, setImportant] = useState(false);
+  // const [importantRef, setImportant] = useState(false);
 
   const [tareas, setTareas] = useState([]);
 
@@ -55,22 +55,40 @@ export default function Tareas() {
         <Row>
           <Col xs={12} md={8}>
             <h3>Crear tarea</h3>
-            <Form.Label>
-              <strong>Título</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="nameRef"
-              onChange={(ev) => setName(ev.target.value)}
-            />
-            <Form.Label>
-              <strong>Descripción</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="descriptionRef"
-              onChange={(ev) => setDescription(ev.target.value)}
-            />
+            <Form.Group>
+              <Form.Label>
+                <strong>Título</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                id="nameRef"
+                placeholder="Nombre de la tarea"
+                onChange={(ev) => setName(ev.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>
+                <strong>Descripción</strong>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                id="descriptionRef"
+                placeholder="Descripción breve de la tarea"
+                onChange={(ev) => setDescription(ev.target.value)}
+              />
+            </Form.Group>
+            {/* <Form.Group>
+              <input
+                type="checkbox"
+                className="me-2"
+                checked={importantRef}
+                value={importantRef}
+                onChange={(ev) => setImportant(ev.target.value)}
+              />
+              <Form.Label>
+                Marca la casilla si la tarea es importante
+              </Form.Label>
+            </Form.Group> */}
             <Button
               variant="primary"
               className="mt-2"
@@ -82,10 +100,9 @@ export default function Tareas() {
         </Row>
         <hr />
         <h3>Muro de tareas</h3>
-        <Button variant="dark" className="me-1">
+        {/* <Button variant="dark" className="me-1">
           Mostrar tareas hechas
-        </Button>
-        <hr />
+        </Button> */}
         <Row xs={1} lg={3} className="g-4">
           {tareas.map((tarea) => (
             // eslint-disable-next-line react/jsx-key

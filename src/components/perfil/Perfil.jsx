@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./../NavBar";
 
@@ -25,14 +25,24 @@ export default function Perfil() {
   return (
     <>
       <NavBar />
-      <div>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <Button variant="primary" onClick={() => handleLogOut()}>
-          Cerrar sesión
-        </Button>
-      </div>
+
+      <Card
+        border="primary"
+        style={{ width: "18rem", marginLeft: "20px", marginTop: "20px" }}
+      >
+        <Card.Header>
+          <strong>Perfil del usuario</strong>
+        </Card.Header>
+        <Card.Body>
+          <Card.Title>{user.email}</Card.Title>
+          <Card.Text>
+            Estas cuentas son solo de prueba, son usadas con fines educativos.
+          </Card.Text>
+          <Button variant="danger" onClick={() => handleLogOut()}>
+            Cerrar sesión
+          </Button>
+        </Card.Body>
+      </Card>
     </>
   );
 }

@@ -23,6 +23,8 @@ export default function UsuariosCard({ usuario }) {
       if (error) throw error;
 
       setEditing(false);
+
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -36,20 +38,22 @@ export default function UsuariosCard({ usuario }) {
         .eq("id", usuario.id);
 
       if (error) throw error;
+
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "18rem", marginBottom: "15px" }}>
       <Card.Body>
         {editing == false ? (
           <>
             <Card.Title>{usuario.name}</Card.Title>
             <Card.Text>{usuario.user}</Card.Text>
             <Button
-              variant="secondary"
+              variant="success"
               className="me-1"
               onClick={() => setEditing(true)}
             >
@@ -69,6 +73,7 @@ export default function UsuariosCard({ usuario }) {
             >
               Cancelar
             </Button>
+            <hr />
             {/* FORMULARIO  */}
             <Form.Group>
               <Form.Label>Nombre</Form.Label>

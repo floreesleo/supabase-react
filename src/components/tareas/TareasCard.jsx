@@ -26,6 +26,7 @@ export default function TareasCard({ tarea }) {
 
       if (error) throw error;
 
+      window.location.reload();
       setEditing(false);
     } catch (error) {
       console.error(error);
@@ -40,21 +41,28 @@ export default function TareasCard({ tarea }) {
         .eq("id", tarea.id);
 
       if (error) throw error;
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function handleToggleDone() {
+  async function updateDone() {
     setDone(true);
-    const { error } = await supabase
-      .from("tareas")
-      .update({
-        done: done,
-      })
-      .eq("id", tarea.id);
+    try {
+      const { error } = await supabase
+        .from("tareas")
+        .update({
+          done: done,
+        })
+        .eq("id", tarea.id);
 
-    if (error) throw error;
+      if (error) throw error;
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -87,7 +95,7 @@ export default function TareasCard({ tarea }) {
             <Button
               variant="success"
               className="me-1"
-              onClick={() => handleToggleDone()}
+              onClick={() => updateDone()}
             >
               Hecho
             </Button>

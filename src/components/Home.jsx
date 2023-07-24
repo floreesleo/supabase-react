@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 
-import { Container, Form, Card, Alert, Button, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Card,
+  Alert,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
@@ -140,10 +148,10 @@ export default function Home() {
             <p>
               <strong>Email:</strong> {user.email}
             </p>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="formFile">
               <Form.Control
                 type="file"
-                accept="image/png, image/jpge, .doc, .docx, .txt"
+                accept="image/png, image/jpge, image/jpg, .doc, .docx, .txt"
                 onChange={(ev) => uploadFile(ev)}
               />
             </Form.Group>

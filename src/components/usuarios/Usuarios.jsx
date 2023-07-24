@@ -58,12 +58,14 @@ export default function Usuarios() {
             <Form.Control
               type="text"
               id="nameRef"
+              placeholder="John Smith"
               onChange={(ev) => setName(ev.target.value)}
             />
             <Form.Label>Usuario</Form.Label>
             <Form.Control
               type="email"
               id="userRef"
+              placeholder="example@example.com"
               onChange={(ev) => setUser(ev.target.value)}
             />
             <Button

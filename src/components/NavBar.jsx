@@ -1,7 +1,10 @@
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useUser } from "@supabase/auth-helpers-react";
 
 export default function NavBar() {
+  const user = useUser();
+
   return (
     <Navbar
       expand="lg"
@@ -26,11 +29,17 @@ export default function NavBar() {
               <NavDropdown.Item as={Link} to="/contactos">
                 Contactos
               </NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/perfil">
                 Perfil
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+        </Navbar.Collapse>
+        <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Signed in as: <Link to="/perfil">{user.email}</Link>
+          </Navbar.Text>
         </Navbar.Collapse>
       </Container>
     </Navbar>
