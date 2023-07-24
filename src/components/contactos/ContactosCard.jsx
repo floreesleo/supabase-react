@@ -12,7 +12,7 @@ export default function ContactosCard({ usuario }) {
           <>
             <Card.Title>{usuario.name}</Card.Title>
             <Button
-              variant="primary"
+              variant="dark"
               size="sm"
               className="me-1"
               onClick={() => setEditing(true)}
@@ -27,11 +27,7 @@ export default function ContactosCard({ usuario }) {
             <Button className="me-2" size="sm" variant="primary" type="submit">
               Contactar
             </Button>
-            <Button
-              size="sm"
-              variant="danger"
-              onClick={() => setEditing(false)}
-            >
+            <Button size="sm" variant="dark" onClick={() => setEditing(false)}>
               Regresar
             </Button>
           </>

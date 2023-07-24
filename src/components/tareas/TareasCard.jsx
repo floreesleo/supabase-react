@@ -67,7 +67,6 @@ export default function TareasCard({ tarea }) {
         style={{
           border: "1px solid black",
           borderRadius: "5px",
-          background: tarea.important ? "#ffdd59" : "#d2dae2",
         }}
       >
         {editing == false ? (
@@ -76,6 +75,15 @@ export default function TareasCard({ tarea }) {
               <strong>{tarea.name}</strong>
             </Card.Title>
             <Card.Text>{tarea.description}</Card.Text>
+            <Card.Text
+              style={{
+                color: tarea.important ? "#eb2f06" : "#535c68",
+              }}
+            >
+              <strong>
+                {tarea.important ? "Importante" : "No importante"}
+              </strong>
+            </Card.Text>
             <Button
               variant="success"
               className="me-1"
@@ -84,7 +92,7 @@ export default function TareasCard({ tarea }) {
               Hecho
             </Button>
             <Button
-              variant="secondary"
+              variant="primary"
               className="me-1"
               onClick={() => setEditing(true)}
             >
