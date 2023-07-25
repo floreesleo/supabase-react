@@ -6,6 +6,7 @@ import Perfil from "./components/perfil/Perfil";
 import Usuarios from "./components/usuarios/Usuarios";
 import Tareas from "./components/tareas/Tareas";
 import Contactos from "./components/contactos/Contactos";
+import SearchComponent from "./components/buscador/SearchComponent";
 //= import Signup from "./components/autenticacion/Signup";
 //= import Login from "./components/autenticacion/Login";
 //= import ForgotPassword from "./components/autenticacion/ForgotPassword";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/tareas" element={<Tareas />} />
           <Route path="/contactos" element={<Contactos />} />
+          <Route path="/buscador" element={<SearchComponent />} />
         </Routes>
       </TaskContextProvider>
     </>

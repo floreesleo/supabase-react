@@ -1,9 +1,9 @@
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useUser } from "@supabase/auth-helpers-react";
+// import { useUser } from "@supabase/auth-helpers-react";
 
 export default function NavBar() {
-  const user = useUser();
+  // const user = useUser();
 
   return (
     <Navbar
@@ -29,6 +29,9 @@ export default function NavBar() {
               <NavDropdown.Item as={Link} to="/contactos">
                 Contactos
               </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/buscador">
+                Buscador
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/perfil">
                 Perfil
@@ -36,11 +39,11 @@ export default function NavBar() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        <Navbar.Collapse className="justify-content-end">
+        {/* <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             Signed in as: <Link to="/perfil">{user.email}</Link>
           </Navbar.Text>
-        </Navbar.Collapse>
+        </Navbar.Collapse> */}
       </Container>
     </Navbar>
   );

@@ -42,6 +42,7 @@ export default function UsuariosCard({ usuario }) {
       window.location.reload();
     } catch (error) {
       console.error(error);
+      alert(error);
     }
   }
 

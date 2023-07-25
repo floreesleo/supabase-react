@@ -16,13 +16,19 @@ import NavBar from "./NavBar";
 
 import { v4 as uuidv4 } from "uuid";
 
-// https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/dbeae5c4-9d27-4a25-b285-44f91f674d60/462b59de-bbb6-415c-ac88-c9b922c8b2aa
+import { useNavigate } from "react-router-dom";
+
+//| https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/dbeae5c4-9d27-4a25-b285-44f91f674d60/462b59de-bbb6-415c-ac88-c9b922c8b2aa
 const CDNURL =
   "https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/";
 
 export default function Home() {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
+
+  const navigate = useNavigate();
+
+  console.log("Estado de la sesión", user);
 
   //| LOGIN
   const [email, setEmail] = useState("");
@@ -57,7 +63,7 @@ export default function Home() {
       console.log(data);
     } catch (error) {
       setError("Error al enviar correo de confirmación");
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -79,10 +85,6 @@ export default function Home() {
 
   async function uploadFile(ev) {
     let file = ev.target.files[0];
-
-    // userId: leo
-    // leo/
-    // leo/miArchivo.txt
 
     const { data, error } = await supabaseClient.storage
       .from("files")
@@ -106,6 +108,19 @@ export default function Home() {
       getFiles();
     }
   }
+
+  async function handleLogOut() {
+    try {
+      const { error } = await supabaseClient.auth.signOut();
+      navigate("/");
+      if (error) {
+        console.error(error);
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       {user === null ? (
@@ -118,7 +133,7 @@ export default function Home() {
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
                   <Form.Label>
-                    Ingresa tu Email para obtener el Link máico
+                    Ingresa tu Email para obtener el Link mácico
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -138,6 +153,13 @@ export default function Home() {
                   </Button>
                 </Form.Group>
               </Form>
+              <Button
+                variant="danger"
+                className="mt-2"
+                onClick={() => handleLogOut()}
+              >
+                Cerrar sesión
+              </Button>
             </Card.Body>
           </Card>
         </>
@@ -145,9 +167,6 @@ export default function Home() {
         <>
           <NavBar />
           <Container align="center" className="container-sm mt-4">
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
             <Form.Group className="mb-3" controlId="formFile">
               <Form.Control
                 type="file"
