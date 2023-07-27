@@ -7,18 +7,22 @@ export default function SearchComponent() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
 
+  //| URL de donde está almacenada la api fake de usuarios
   const URL = "https://jsonplaceholder.typicode.com/users";
 
+  //| Funcion para mostrar los datos de JSON de la URL
   const showData = async () => {
     const response = await fetch(URL);
     const data = await response.json();
     setUsers(data);
   };
 
+  //| Funcion con la que se buscará al usuario por medio del evento e, que se almacenará en la constante setSearch
   const searcher = (e) => {
     setSearch(e.target.value);
   };
 
+  // Constante donde se filtra el resultado de la busqueda, pasando a minusculas lo escrito en el buscador
   const results = !search
     ? users
     : users.filter((dato) =>
@@ -26,6 +30,7 @@ export default function SearchComponent() {
       );
 
   useEffect(() => {
+    // Al iniciar, recargar o mostrar el componente se mostrarán los datos de los usuario de la URL
     showData();
   }, []);
 

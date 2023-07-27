@@ -1,3 +1,4 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { useEffect, useState } from "react";
 import { Row, Container, Form, Col, Button } from "react-bootstrap";
 import NavBar from "../NavBar";
@@ -5,21 +6,25 @@ import { supabase } from "../../supabase/client";
 import UsuariosCard from "./UsuariosCard";
 
 export default function Usuarios() {
+  //| Constantes para almacenar los datos de nombre y usuario que se escriban en los inputs
   const [nameRef, setName] = useState("");
   const [userRef, setUser] = useState("");
 
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
+    //| El useEffect se ejecutará cada vez que se habra o recargue la página, ejecutando la funcion de getUsuarios()
     getUsuarios();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //| Funcion para obtener a los usuarios de la base de datos de supabase
   async function getUsuarios() {
     try {
       const { data, error } = await supabase.from("usuarios").select("*");
 
       if (error) throw error;
+      //| Si data no es nula, envia a la constante setUsuarios la misma data
       if (data != null) {
         setUsuarios(data); // [usuario1, usuario2, usuario3]
       }
@@ -28,10 +33,12 @@ export default function Usuarios() {
     }
   }
 
+  //| Funcion para crear usuarios
   async function createUser() {
     try {
       const { error } = await supabase
         .from("usuarios")
+        //| Inserta a la tabla usuarios los valores de las constantes antes declaradas
         .insert({
           name: nameRef,
           user: userRef,
@@ -39,7 +46,7 @@ export default function Usuarios() {
         .single();
       if (error) throw error;
 
-      window.location.reload();
+      window.location.reload(); //| Recarga la página automaticamente al crear el usuario
     } catch (error) {
       console.error(error);
     }
@@ -80,8 +87,8 @@ export default function Usuarios() {
         <hr />
         <h3>Database users</h3>
         <Row xs={1} lg={3} className="g-4">
+          {/* Mapea la tabla usuarios y los va mostrando por medio del componente UsuariosCard, pasandole el parametro usuario */}
           {usuarios.map((usuario) => (
-            // eslint-disable-next-line react/jsx-key
             <Col key={usuario.id}>
               <UsuariosCard usuario={usuario} />
             </Col>

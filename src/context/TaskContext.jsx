@@ -1,8 +1,10 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { createContext, useContext, useState } from "react";
 import { supabase } from "./../supabase/client";
 
 export const TaskContext = createContext();
 
+//| La constante useTask es la proveedora de las funciones, constantes a utilizar en el proyecto
 // eslint-disable-next-line react-refresh/only-export-components
 export const useTask = () => {
   const context = useContext(TaskContext);
@@ -11,7 +13,7 @@ export const useTask = () => {
   return context;
 };
 
-//+ Componente más grande que contiene a los componentes pequeños
+//| Componente más grande que contiene a los componentes pequeños
 // eslint-disable-next-line react/prop-types
 export const TaskContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -21,7 +23,7 @@ export const TaskContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const getTasks = async (done = false) => {
-    //| se pone done en false, ya que se le va a indicar si quiero que esté en true o false
+    //? Se pone done en false, ya que se le va a indicar si quiero que esté en true o false
 
     setLoading(true);
     const user = supabase.auth.getUser();
@@ -41,11 +43,13 @@ export const TaskContextProvider = ({ children }) => {
     setLoading(false);
   };
 
+  //| Funcion para crear una tarea
   const createTask = async (taskName) => {
     setAdding(true);
     try {
-      const user = supabase.auth.getUser(); //! debe jalar los datos del usuario, especificamente el id
+      const user = supabase.auth.getUser(); //| Se obtienen los datos del usuario que haya iniciado sesión
       const { error, data } = await supabase.from("tasks").insert({
+        //| inserta a la tabla tasks los valores name y el id del usuario
         name: taskName,
         userId: user.id,
       });
@@ -60,11 +64,12 @@ export const TaskContextProvider = ({ children }) => {
     }
   };
 
+  //| Funcion para borrar tarea
   const deleteTask = async (id) => {
-    const user = supabase.auth.getUser();
+    //| Recibe como paremetro el id de la tarea que se decea borrar
+    const user = supabase.auth.getUser(); //| Se obtienen los datos del usuario que haya iniciado sesión
 
-    // eslint-disable-next-line no-unused-vars
-    const { error, data } = await supabase
+    const { error } = await supabase
       .from("tasks")
       .delete()
       .eq("userId", user.id)
@@ -72,9 +77,10 @@ export const TaskContextProvider = ({ children }) => {
 
     if (error) throw error;
 
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks(tasks.filter((task) => task.id !== id)); //| Se filtra la tabla tasks por medio del id de la tarea a borrar
   };
 
+  //| Funcion para actualizar tarea
   const updateTask = async (id, updateFields) => {
     const user = supabase.auth.getUser();
 
@@ -87,29 +93,30 @@ export const TaskContextProvider = ({ children }) => {
 
     if (error) throw error;
 
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks(tasks.filter((task) => task.id !== id)); //| Se filtra la tabla tasks por medio del id de la tarea a actualizar
   };
 
-  //| USUARIOS
+  //| Funcion para obtener a todos los usuarios de la tabla administrador
   const getUsers = async () => {
     setLoading(true);
 
     const { error, data } = await supabase
-      .from("administrador")
+      .from("administrador") //| Obtiene a todos los campos de la tabla administrador
       .select()
       .order("id", { ascending: true });
 
     if (error) throw error;
 
-    setUsers(data);
+    setUsers(data); //| Carga a setUsers la data de la seleccion de la tabla
 
     setLoading(false);
   };
 
+  //| Funcion para crear un usuario nuevo
   const createUser = async (nombre, usuario) => {
     setAdding(true);
     try {
-      const { error, data } = await supabase
+      const { error, data } = await supabase //| Consulta a base de datos para crear nuevo usuario
         .from("administrador")
         .insert({ name: nombre, user: usuario });
 
@@ -123,6 +130,7 @@ export const TaskContextProvider = ({ children }) => {
     }
   };
 
+  //| Funcion para borrar usuario pasandole por parametro el id
   const deleteUser = async (id) => {
     // eslint-disable-next-line no-unused-vars
     const { error, data } = await supabase
@@ -135,6 +143,7 @@ export const TaskContextProvider = ({ children }) => {
     setUsers(users.filter((user) => user.id !== id));
   };
 
+  //| Funcion para actualizar al usuario, pasandole como parametros el id y el campo que se decea acualizar
   const updateUser = async (id, updateFields) => {
     // eslint-disable-next-line no-unused-vars
     const { error, data } = await supabase
@@ -150,6 +159,7 @@ export const TaskContextProvider = ({ children }) => {
   return (
     <TaskContext.Provider
       value={{
+        // Value exporta todas las constantes, funciones y variables que se decean proveer a los demas componentes
         tasks,
         getTasks,
         createTask,

@@ -1,3 +1,4 @@
+//| Este componente se utiliza cuando el usuario ingresa a una direccion dentro de la aplicacion web que no existe. ERROR 404
 export default function NotFound() {
   return (
     <div>

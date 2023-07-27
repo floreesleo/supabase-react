@@ -1,3 +1,4 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Card, Button } from "react-bootstrap";
@@ -12,6 +13,7 @@ export default function ContactosCard({ usuario }) {
           <>
             <Card.Title>{usuario.name}</Card.Title>
             <Button
+              //| Boton para ver el email del perfil
               variant="dark"
               size="sm"
               className="me-1"
@@ -28,6 +30,7 @@ export default function ContactosCard({ usuario }) {
               Contactar
             </Button>
             <Button size="sm" variant="dark" onClick={() => setEditing(false)}>
+              {/* Regresar a ver el nombre del contacto */}
               Regresar
             </Button>
           </>

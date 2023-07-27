@@ -1,3 +1,4 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { useEffect, useState } from "react";
 import { Row, Container, Col } from "react-bootstrap";
 import NavBar from "../NavBar";
@@ -12,13 +13,14 @@ export default function Contactos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //| Funcion para conseguir a todos los usuarios de la base de datos de supabase
   async function getUsuarios() {
     try {
       const { data, error } = await supabase.from("usuarios").select("*");
 
       if (error) throw error;
       if (data != null) {
-        setUsuarios(data); // [usuario1, usuario2, usuario3]
+        setUsuarios(data);
       }
     } catch (error) {
       console.error(error);

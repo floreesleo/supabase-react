@@ -1,3 +1,4 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { useEffect, useState } from "react";
 import { Row, Container, Form, Col, Button } from "react-bootstrap";
 import NavBar from "../NavBar";
@@ -5,30 +6,34 @@ import { supabase } from "../../supabase/client";
 import TareasCard from "./TareasCard";
 
 export default function Tareas() {
+  //| Constantes para almacenar los valores de los inputs
   const [nameRef, setName] = useState("");
   const [descriptionRef, setDescription] = useState("");
-  // const [importantRef, setImportant] = useState(false);
 
+  //| Constante con la que se manejarán las tareas por medio de un arreglo
   const [tareas, setTareas] = useState([]);
 
   useEffect(() => {
+    //| El useEffect se ejecutará cada vez que se habra o recargue la página, ejecutando la funcion de getTareas()
     getTareas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //| Funcion para obtener todas las tareas de la tabla tareas
   async function getTareas() {
     try {
       const { data, error } = await supabase.from("tareas").select("*");
 
       if (error) throw error;
       if (data != null) {
-        setTareas(data); // [usuario1, usuario2, usuario3]
+        setTareas(data);
       }
     } catch (error) {
       console.error(error);
     }
   }
 
+  //| Funcion para crear una tarea por medio de una inserción
   async function createTarea() {
     try {
       const { error } = await supabase
@@ -77,18 +82,6 @@ export default function Tareas() {
                 onChange={(ev) => setDescription(ev.target.value)}
               />
             </Form.Group>
-            {/* <Form.Group>
-              <input
-                type="checkbox"
-                className="me-2"
-                checked={importantRef}
-                value={importantRef}
-                onChange={(ev) => setImportant(ev.target.value)}
-              />
-              <Form.Label>
-                Marca la casilla si la tarea es importante
-              </Form.Label>
-            </Form.Group> */}
             <Button
               variant="primary"
               className="mt-2"
@@ -100,12 +93,8 @@ export default function Tareas() {
         </Row>
         <hr />
         <h3>Muro de tareas</h3>
-        {/* <Button variant="dark" className="me-1">
-          Mostrar tareas hechas
-        </Button> */}
         <Row xs={1} lg={3} className="g-4">
           {tareas.map((tarea) => (
-            // eslint-disable-next-line react/jsx-key
             <Col key={tarea.id}>
               <TareasCard tarea={tarea} />
             </Col>

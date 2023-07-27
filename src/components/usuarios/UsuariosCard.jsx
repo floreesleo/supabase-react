@@ -1,15 +1,18 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Card, Button, Form } from "react-bootstrap";
-
 import { supabase } from "../../supabase/client";
 
 export default function UsuariosCard({ usuario }) {
+  //| constantes con las que se almacenan los valores de los inputs
   const [name, setName] = useState(usuario.name);
   const [user, setUser] = useState(usuario.user);
 
+  //| Constante con la cual se le dirá a la Card si se está editando o no
   const [editing, setEditing] = useState(false);
 
+  //| Funcion para actualizar al usuario con respecto al id del mismo
   async function updateUser() {
     try {
       const { error } = await supabase
@@ -24,12 +27,13 @@ export default function UsuariosCard({ usuario }) {
 
       setEditing(false);
 
-      window.location.reload();
+      window.location.reload(); //| Recarga la página automaticamente al ejecutar la consulta
     } catch (error) {
       console.error(error);
     }
   }
 
+  //| Funcion para borrar a un usuario con respecto a su id
   async function deleteUser() {
     try {
       const { error } = await supabase
@@ -50,13 +54,14 @@ export default function UsuariosCard({ usuario }) {
     <Card style={{ width: "18rem", marginBottom: "15px" }}>
       <Card.Body>
         {editing == false ? (
+          //| Si editing es false, solo se muestran los datos del usuario con sus respectivos botones
           <>
             <Card.Title>{usuario.name}</Card.Title>
             <Card.Text>{usuario.user}</Card.Text>
             <Button
               variant="success"
               className="me-1"
-              onClick={() => setEditing(true)}
+              onClick={() => setEditing(true)} //| Con esté boton se maneja editing, para mostrar el formulario del usuario o no
             >
               Editar
             </Button>
@@ -65,12 +70,13 @@ export default function UsuariosCard({ usuario }) {
             </Button>
           </>
         ) : (
+          //| Si editing es true, se muestra el formulario para editar los datos del usuario
           <>
             <h4>Editando...</h4>
             <Button
               size="sm"
               variant="danger"
-              onClick={() => setEditing(false)}
+              onClick={() => setEditing(false)} //| Con esté boton se maneja editing, para mostrar los datos del usuario
             >
               Cancelar
             </Button>

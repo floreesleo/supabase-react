@@ -1,11 +1,10 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { useUser } from "@supabase/auth-helpers-react";
 
 export default function NavBar() {
-  // const user = useUser();
-
   return (
+    //| Barra de navegación util para todo el proyecto
     <Navbar
       expand="lg"
       className="bg-body-tertiary"
@@ -39,11 +38,6 @@ export default function NavBar() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        {/* <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            Signed in as: <Link to="/perfil">{user.email}</Link>
-          </Navbar.Text>
-        </Navbar.Collapse> */}
       </Container>
     </Navbar>
   );

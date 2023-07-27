@@ -1,5 +1,5 @@
+//| Importar librerias, dependencias, hooks y  modulos a utilizar
 import { useEffect, useState } from "react";
-
 import {
   Container,
   Form,
@@ -9,36 +9,33 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-
 import NavBar from "./NavBar";
-
 import { v4 as uuidv4 } from "uuid";
-
 import { useNavigate } from "react-router-dom";
 
-//| https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/dbeae5c4-9d27-4a25-b285-44f91f674d60/462b59de-bbb6-415c-ac88-c9b922c8b2aa
+//| URL donde está almacenada la base de datos de storage, módulo donde se suben archivos
+//+ https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/dbeae5c4-9d27-4a25-b285-44f91f674d60/462b59de-bbb6-415c-ac88-c9b922c8b2aa
 const CDNURL =
   "https://tiwxplqzmqvtbkrrsflm.supabase.co/storage/v1/object/public/files/";
 
 export default function Home() {
-  const user = useUser();
-  const supabaseClient = useSupabaseClient();
+  const user = useUser(); //| user hace uso del método useUser() de la dependencia helper de supabase
+  const supabaseClient = useSupabaseClient(); //| supabaseClient es la libreria encargada de
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //| navigate utiliza el método useNavigate, que relacionado a los Route del archivo App.jsx se navega por los módulos que se le pasen como parametros.
 
   console.log("Estado de la sesión", user);
 
-  //| LOGIN
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); //| Constantes por las que se recibe el email que introdusca el usuario
 
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState(""); //| Constantes por las que se se le envia un mensaje de confirmación al usuario que decea iniciar sesión
+  const [error, setError] = useState(""); //| Constantes por las que se le envia un mensaje de error, si es que ocurre alguno
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]); //| Constantes para asignar los archivos que se van a asignar
 
   useEffect(() => {
+    //| Si existe el usuario, obtiene todos los archivos de la base de datos
     if (user) {
       getFiles();
     }
@@ -49,6 +46,7 @@ export default function Home() {
     e.preventDefault();
 
     try {
+      //| Obtiene las constantes data y error del método signInWithOtp, la cual este método es por el cual el usuario inicia sesión por medio de confirmacion de correo electronico
       const { data, error } = await supabaseClient.auth.signInWithOtp({
         email,
       });
@@ -67,6 +65,7 @@ export default function Home() {
     }
   };
 
+  //| Funcion para obtener todos los archivos del storage donde se pasa como parametro el id del usuario iniciado
   async function getFiles() {
     const { data, error } = await supabaseClient.storage
       .from("files")
@@ -83,12 +82,13 @@ export default function Home() {
     }
   }
 
+  //| Funcion para subir archivo al storage de supabase
   async function uploadFile(ev) {
     let file = ev.target.files[0];
 
     const { data, error } = await supabaseClient.storage
       .from("files")
-      .upload(user.id + "/" + uuidv4(), file); // uuid
+      .upload(user.id + "/" + uuidv4(), file); //? uuid genera un id de tipo string aleatorio para el nombre del archivo
 
     if (data) {
       getFiles();
@@ -97,6 +97,7 @@ export default function Home() {
     }
   }
 
+  //| Funcion para borrar un archivo con respecto al id del usuario
   async function deleteImage(imageName) {
     const { error } = await supabaseClient.storage
       .from("files")
@@ -109,6 +110,7 @@ export default function Home() {
     }
   }
 
+  //| Funcion para cerrar sesión
   async function handleLogOut() {
     try {
       const { error } = await supabaseClient.auth.signOut();
@@ -123,11 +125,13 @@ export default function Home() {
   }
   return (
     <>
+      {/* Si la constante user es nula, se va al formulario */}
       {user === null ? (
         <>
           <Card>
             <Card.Body>
               <h2 className="text-center mb-4">Inicio de sesión</h2>
+              {/* Imprime los mensajes o los errores del estado de la sesión */}
               {message && <Alert variant="success">{message}</Alert>}
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
@@ -164,6 +168,7 @@ export default function Home() {
           </Card>
         </>
       ) : (
+        //| Si el usuario no es nulo, entra al Home
         <>
           <NavBar />
           <Container align="center" className="container-sm mt-4">
@@ -176,8 +181,10 @@ export default function Home() {
             </Form.Group>
             <h3>Tus archivos</h3>
             <Row xs={1} md={3} className="g-4">
+              {/* Mapea a las imagenes y las muestra por medio de una Card */}
               {images.map((image) => {
                 return (
+                  //| Obtiene como llave el url, el id del usuario y el nombre de la imagen
                   <Col key={CDNURL + user.id + "/" + image.name}>
                     <Card>
                       <Card.Img
@@ -185,6 +192,7 @@ export default function Home() {
                         src={CDNURL + user.id + "/" + image.name}
                       />
                       <Card.Body>
+                        {/* Boton para borrar la imagen */}
                         <Button
                           variant="danger"
                           onClick={() => deleteImage(image.name)}
